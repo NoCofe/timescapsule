@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSpace 原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        happy: '#FFD700',
+                        calm: '#87CEFA',
+                        busy: '#FFA07A',
+                        anxious: '#FF4500',
+                        sad: '#708090',
+                        neutral: '#C0C0C0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .ios-status-bar {
+            height: 44px;
+        }
+        .ios-home-indicator {
+            height: 5px;
+            width: 134px;
+            background-color: black;
+            border-radius: 3px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-md mx-auto bg-white min-h-screen relative overflow-hidden">
+        <!-- iOS状态栏 -->
+        <div class="ios-status-bar bg-black text-white flex items-center justify-between px-5">
+            <span>9:41</span>
+            <div class="flex space-x-2">
+                <i class="ri-signal-wifi-fill"></i>
+                <i class="ri-battery-fill"></i>
+            </div>
+        </div>
+
+        <!-- 首页 - 时间流 -->
+        <div id="homePage" class="page active min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <h1 class="text-xl font-bold">LifeSpace</h1>
+                <div class="flex items-center space-x-1 border border-gray-300 rounded-full px-3 py-1">
+                    <span>全部</span>
+                    <i class="ri-arrow-down-s-line"></i>
+                </div>
+            </div>
+
+            <!-- 时间轴内容 -->
+            <div class="px-4 py-2">
+                <!-- 今天 -->
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold mb-3">今天</h2>
+                    
+                    <!-- 记录卡片1 -->
+                    <div class="bg-white rounded-xl shadow-sm mb-4 overflow-hidden">
+                        <div class="p-3">
+                            <div class="text-gray-500 text-sm mb-1">08:32 AM</div>
+                            <p class="text-gray-800 mb-3">今天早上带孩子去了公园，天气很好，孩子非常开心。遇到了几个熟人，聊了一会儿，感觉心情舒畅。</p>
+                            
+                            <!-- 图片区域 -->
+                            <div class="flex overflow-x-auto space-x-2 pb-2">
+                                <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30" alt="公园" class="w-28 h-28 object-cover rounded-lg flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1588117305388-c2631a279f82" alt="孩子" class="w-28 h-28 object-cover rounded-lg flex-shrink-0">
+                            </div>
+                            
+                            <!-- 语音播放器 -->
+                            <div class="flex items-center bg-gray-100 rounded-full p-2 mt-2">
+                                <i class="ri-play-circle-fill text-blue-500 text-xl"></i>
+                                <div class="h-1 bg-blue-500 rounded-full flex-grow mx-2 relative">
+                                    <div class="w-1/3 h-1 bg-gray-300 absolute right-0"></div>
+                                </div>
+                                <span class="text-xs text-gray-500">0:42</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 记录卡片2 -->
+                    <div class="bg-white rounded-xl shadow-sm mb-4">
+                        <div class="p-3">
+                            <div class="text-gray-500 text-sm mb-1">12:15 PM</div>
+                            <p class="text-gray-800 mb-3">午饭做了孩子最爱吃的意面，他吃了两大碗，看着他的胃口这么好，我很欣慰。</p>
+                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72" alt="意面" class="w-full h-40 object-cover rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <!-- AI总结卡片 -->
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+                        <div class="flex items-start">
+                            <div class="bg-happy rounded-full w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-lg">🌞</span>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-blue-800">今日总结</h3>
+                                <p class="text-gray-600 text-sm">今天是充满阳光的一天！你和孩子共度了愉快的时光，情绪稳定积极。家庭活动带来了满足感。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 昨天 -->
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold mb-3">昨天</h2>
+                    
+                    <div class="bg-white rounded-xl shadow-sm mb-4">
+                        <div class="p-3">
+                            <div class="text-gray-500 text-sm mb-1">19:30 PM</div>
+                            <p class="text-gray-800 mb-3">今天工作太忙了，几乎没时间喘息。会议一个接一个，感觉有点力不从心。</p>
+                            <div class="flex items-center bg-gray-100 rounded-full p-2">
+                                <i class="ri-play-circle-fill text-blue-500 text-xl"></i>
+                                <div class="h-1 bg-blue-500 rounded-full flex-grow mx-2 relative">
+                                    <div class="w-2/3 h-1 bg-gray-300 absolute right-0"></div>
+                                </div>
+                                <span class="text-xs text-gray-500">1:24</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI总结卡片 -->
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+                        <div class="flex items-start">
+                            <div class="bg-busy rounded-full w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-lg">🌪</span>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-blue-800">昨日总结</h3>
+                                <p class="text-gray-600 text-sm">工作压力较大，情绪偏向紧张和忙碌。建议今天给自己安排一些放松活动，平衡工作和生活。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加记录页 -->
+        <div id="addPage" class="page min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <div class="flex items-center">
+                    <i class="ri-arrow-left-line text-xl mr-2"></i>
+                    <h1 class="text-xl font-medium">添加记录</h1>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <!-- 未来时间提示 - 默认隐藏 -->
+                <div id="futureTimeIndicator" class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 hidden">
+                    <div class="flex items-center">
+                        <i class="ri-time-line text-blue-500 mr-2"></i>
+                        <span class="text-blue-800" id="selectedFutureTime">写给2024年4月20日的自己</span>
+                    </div>
+                </div>
+                
+                <!-- 文本输入区域 -->
+                <div class="border border-gray-300 rounded-xl p-3 mb-4">
+                    <textarea placeholder="记录下此刻的想法..." class="w-full h-32 outline-none resize-none"></textarea>
+                    
+                    <!-- 语音输入控制区 -->
+                    <div class="flex items-center justify-between mt-3 mb-2">
+                        <div class="flex items-center">
+                            <button class="mr-3 text-gray-500 hover:text-blue-500">
+                                <i class="ri-image-add-line text-xl"></i>
+                            </button>
+                            <button class="mr-3 text-gray-500 hover:text-blue-500">
+                                <i class="ri-emotion-line text-xl"></i>
+                            </button>
+                        </div>
+                        <button id="voiceInputBtn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full flex items-center">
+                            <i class="ri-mic-line mr-1"></i>
+                            <span>语音输入</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 录音中状态 (默认隐藏) -->
+                    <div id="recordingStatus" class="hidden bg-red-50 rounded-lg p-3 mt-2 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="relative">
+                                <i class="ri-mic-fill text-red-500 text-xl"></i>
+                                <div class="absolute -right-1 -top-1 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                            </div>
+                            <div class="ml-2">
+                                <p class="text-red-700 text-sm font-medium">正在录音...</p>
+                                <p class="text-red-500 text-xs">00:12</p>
+                            </div>
+                        </div>
+                        <button class="bg-white text-red-500 border border-red-200 rounded-full px-3 py-1 text-sm">
+                            结束录音
+                        </button>
+                    </div>
+                    
+                    <!-- 语音播放器 -->
+                    <div class="flex items-center bg-gray-100 rounded-full p-2 mt-2">
+                        <i class="ri-play-circle-fill text-blue-500 text-xl"></i>
+                        <div class="h-1 bg-blue-500 rounded-full flex-grow mx-2 relative">
+                            <div class="w-1/2 h-1 bg-gray-300 absolute right-0"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">0:32</span>
+                        <i class="ri-delete-bin-line text-red-500 ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- 媒体上传区域 -->
+                <div class="mb-4">
+                    <div class="flex flex-wrap gap-2">
+                        <div class="relative w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1603366445787-09714680cbf1" class="w-full h-full object-cover rounded-lg">
+                            <button class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                                <i class="ri-close-line text-xs"></i>
+                            </button>
+                        </div>
+                        
+                        <button class="w-20 h-20 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center">
+                            <i class="ri-add-line text-xl text-gray-400"></i>
+                            <span class="text-xs text-gray-400">添加图片</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 分类选择器 -->
+                <div class="bg-gray-50 rounded-xl p-3 mb-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <i class="ri-folder-line text-blue-500 mr-2"></i>
+                            <span>当前空间</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-blue-500 mr-1">家庭 / 孩子</span>
+                            <i class="ri-arrow-right-s-line text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 心情选择 -->
+                <div class="mb-6">
+                    <p class="text-gray-500 mb-2">当前心情</p>
+                    <div class="flex justify-between">
+                        <button class="w-12 h-12 rounded-full bg-happy flex items-center justify-center text-xl shadow-sm">🌞</button>
+                        <button class="w-12 h-12 rounded-full bg-calm flex items-center justify-center text-xl">⛅</button>
+                        <button class="w-12 h-12 rounded-full bg-busy flex items-center justify-center text-xl">🌪</button>
+                        <button class="w-12 h-12 rounded-full bg-anxious flex items-center justify-center text-xl">🌩</button>
+                        <button class="w-12 h-12 rounded-full bg-sad flex items-center justify-center text-xl">🌧</button>
+                        <button class="w-12 h-12 rounded-full bg-neutral flex items-center justify-center text-xl">❄️</button>
+                    </div>
+                </div>
+                
+                <!-- 保存按钮 -->
+                <button class="w-full bg-blue-500 text-white py-3 rounded-xl font-medium">保存记录</button>
+            </div>
+        </div>
+
+        <!-- 回首页 -->
+        <div id="reviewPage" class="page min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <h1 class="text-xl font-medium">回首</h1>
+                <div class="flex space-x-1 bg-gray-100 rounded-lg overflow-hidden">
+                    <button class="px-3 py-1 text-sm bg-blue-500 text-white" onclick="switchReviewView('week')">周</button>
+                    <button class="px-3 py-1 text-sm" onclick="switchReviewView('month')">月</button>
+                </div>
+            </div>
+
+            <!-- 日期选择器 -->
+            <div class="p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <button><i class="ri-arrow-left-s-line"></i></button>
+                    <h2 class="text-lg font-semibold" id="reviewDateTitle">2023年11月</h2>
+                    <button><i class="ri-arrow-right-s-line"></i></button>
+                </div>
+                
+                <!-- 周视图 -->
+                <div id="weekView" class="review-view mb-6">
+                    <div class="flex justify-between mb-2 text-center">
+                        <span class="w-10 text-xs text-gray-500">一</span>
+                        <span class="w-10 text-xs text-gray-500">二</span>
+                        <span class="w-10 text-xs text-gray-500">三</span>
+                        <span class="w-10 text-xs text-gray-500">四</span>
+                        <span class="w-10 text-xs text-gray-500">五</span>
+                        <span class="w-10 text-xs text-gray-500">六</span>
+                        <span class="w-10 text-xs text-gray-500">日</span>
+                    </div>
+                    
+                    <!-- 第一周 -->
+                    <div class="flex justify-between mb-4">
+                        <div class="w-10 h-14 rounded-lg bg-gray-200 flex items-center justify-center">30</div>
+                        <div class="w-10 h-14 rounded-lg bg-gray-200 flex items-center justify-center">31</div>
+                        <div class="w-10 h-14 rounded-lg bg-happy flex items-center justify-center">1</div>
+                        <div class="w-10 h-14 rounded-lg bg-happy flex items-center justify-center">2</div>
+                        <div class="w-10 h-14 rounded-lg bg-busy flex items-center justify-center">3</div>
+                        <div class="w-10 h-14 rounded-lg bg-calm flex items-center justify-center">4</div>
+                        <div class="w-10 h-14 rounded-lg bg-calm flex items-center justify-center">5</div>
+                    </div>
+                    
+                    <!-- 本周摘要 -->
+                    <div class="bg-gray-50 rounded-xl p-3 mb-6">
+                        <h3 class="font-medium mb-1">本周摘要</h3>
+                        <p class="text-sm text-gray-600">这周你的情绪大多是积极的，有2天感到开心，3天平静，1天忙碌。总体来说是个不错的一周！</p>
+                    </div>
+                    
+                    <!-- 第二周 -->
+                    <div class="flex justify-between mb-4">
+                        <div class="w-10 h-14 rounded-lg bg-busy flex items-center justify-center">6</div>
+                        <div class="w-10 h-14 rounded-lg bg-busy flex items-center justify-center">7</div>
+                        <div class="w-10 h-14 rounded-lg bg-anxious flex items-center justify-center">8</div>
+                        <div class="w-10 h-14 rounded-lg bg-sad flex items-center justify-center">9</div>
+                        <div class="w-10 h-14 rounded-lg bg-sad flex items-center justify-center">10</div>
+                        <div class="w-10 h-14 rounded-lg bg-calm flex items-center justify-center">11</div>
+                        <div class="w-10 h-14 rounded-lg bg-calm flex items-center justify-center text-white font-medium border-2 border-blue-500">12</div>
+                    </div>
+                    
+                    <!-- 选中日期展示 -->
+                    <div class="bg-white rounded-xl shadow p-4 mb-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-medium">11月12日，星期日</h3>
+                            <span class="text-blue-500">查看全部</span>
+                        </div>
+                        
+                        <div class="flex items-start mb-3">
+                            <div class="bg-calm rounded-full w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">
+                                <span>⛅</span>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-800">周末在家休息，看了几集喜欢的剧，还和朋友聊了会儿天，心情不错。</p>
+                                <p class="text-xs text-gray-500 mt-1">15:30</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 月视图 -->
+                <div id="monthView" class="review-view mb-6 hidden">
+                    <!-- 月历头部 -->
+                    <div class="grid grid-cols-7 text-center text-xs text-gray-500 mb-2">
+                        <span>一</span>
+                        <span>二</span>
+                        <span>三</span>
+                        <span>四</span>
+                        <span>五</span>
+                        <span>六</span>
+                        <span>日</span>
+                    </div>
+                    
+                    <!-- 第一周 -->
+                    <div class="grid grid-cols-7 gap-1 mb-1">
+                        <div class="aspect-square rounded-lg bg-gray-200 flex items-center justify-center text-sm">30</div>
+                        <div class="aspect-square rounded-lg bg-gray-200 flex items-center justify-center text-sm">31</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">1</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">2</div>
+                        <div class="aspect-square rounded-lg bg-busy flex items-center justify-center text-sm">3</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">4</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">5</div>
+                    </div>
+                    
+                    <!-- 第二周 -->
+                    <div class="grid grid-cols-7 gap-1 mb-1">
+                        <div class="aspect-square rounded-lg bg-busy flex items-center justify-center text-sm">6</div>
+                        <div class="aspect-square rounded-lg bg-busy flex items-center justify-center text-sm">7</div>
+                        <div class="aspect-square rounded-lg bg-anxious flex items-center justify-center text-sm">8</div>
+                        <div class="aspect-square rounded-lg bg-sad flex items-center justify-center text-sm">9</div>
+                        <div class="aspect-square rounded-lg bg-sad flex items-center justify-center text-sm">10</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">11</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm relative border-2 border-blue-500">
+                            12
+                            <div class="absolute w-2 h-2 bg-blue-500 rounded-full right-1 bottom-1"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第三周 -->
+                    <div class="grid grid-cols-7 gap-1 mb-1">
+                        <div class="aspect-square rounded-lg bg-neutral flex items-center justify-center text-sm">13</div>
+                        <div class="aspect-square rounded-lg bg-neutral flex items-center justify-center text-sm">14</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">15</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">16</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">17</div>
+                        <div class="aspect-square rounded-lg bg-busy flex items-center justify-center text-sm">18</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">19</div>
+                    </div>
+                    
+                    <!-- 第四周 -->
+                    <div class="grid grid-cols-7 gap-1 mb-1">
+                        <div class="aspect-square rounded-lg bg-anxious flex items-center justify-center text-sm">20</div>
+                        <div class="aspect-square rounded-lg bg-anxious flex items-center justify-center text-sm">21</div>
+                        <div class="aspect-square rounded-lg bg-busy flex items-center justify-center text-sm">22</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">23</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">24</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">25</div>
+                        <div class="aspect-square rounded-lg bg-happy flex items-center justify-center text-sm">26</div>
+                    </div>
+                    
+                    <!-- 第五周 -->
+                    <div class="grid grid-cols-7 gap-1 mb-6">
+                        <div class="aspect-square rounded-lg bg-neutral flex items-center justify-center text-sm">27</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">28</div>
+                        <div class="aspect-square rounded-lg bg-calm flex items-center justify-center text-sm">29</div>
+                        <div class="aspect-square rounded-lg bg-neutral flex items-center justify-center text-sm">30</div>
+                        <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-sm text-gray-400">1</div>
+                        <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-sm text-gray-400">2</div>
+                        <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-sm text-gray-400">3</div>
+                    </div>
+                    
+                    <!-- 月度摘要 -->
+                    <div class="bg-white rounded-xl shadow p-4 mb-6">
+                        <h3 class="font-medium mb-2">11月心情总结</h3>
+                        <div class="flex items-center justify-around mb-3">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-happy flex items-center justify-center mb-1">🌞</div>
+                                <span class="text-xs">7天</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-calm flex items-center justify-center mb-1">⛅</div>
+                                <span class="text-xs">8天</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-busy flex items-center justify-center mb-1">🌪</div>
+                                <span class="text-xs">6天</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-anxious flex items-center justify-center mb-1">🌩</div>
+                                <span class="text-xs">3天</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-sad flex items-center justify-center mb-1">🌧</div>
+                                <span class="text-xs">2天</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">本月情绪整体积极，有15天处于开心或平静状态，相比上月情绪有所提升。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 空间管理与筛选 -->
+        <div id="spacePage" class="page min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <div class="flex items-center">
+                    <i class="ri-arrow-left-line text-xl mr-2"></i>
+                    <h1 class="text-xl font-medium">选择空间</h1>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <!-- 当前选择 -->
+                <div class="bg-blue-50 rounded-xl p-4 border border-blue-200 mb-6">
+                    <h2 class="font-medium text-blue-800">当前空间</h2>
+                    <div class="flex items-center mt-2">
+                        <i class="ri-folder-fill text-blue-500 mr-2"></i>
+                        <span>家庭 / 孩子</span>
+                    </div>
+                </div>
+                
+                <!-- 空间列表 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center p-3 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-folder-fill text-yellow-500 mr-2"></i>
+                            <span>全部</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 工作空间 -->
+                    <div class="flex justify-between items-center p-3 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-folder-fill text-blue-500 mr-2"></i>
+                            <span>工作</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                    
+                    <!-- 展开的家庭空间 -->
+                    <div class="p-3 border-b bg-gray-50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <i class="ri-folder-open-fill text-green-500 mr-2"></i>
+                                <span>家庭</span>
+                            </div>
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                        
+                        <!-- 子空间 -->
+                        <div class="ml-8 mt-2 space-y-2">
+                            <div class="flex items-center p-2 bg-blue-100 rounded-lg">
+                                <i class="ri-folder-fill text-blue-600 mr-2"></i>
+                                <span class="text-blue-800">孩子</span>
+                            </div>
+                            <div class="flex items-center p-2">
+                                <i class="ri-folder-fill text-green-600 mr-2"></i>
+                                <span>伴侣</span>
+                            </div>
+                            <div class="flex items-center p-2">
+                                <i class="ri-folder-fill text-purple-600 mr-2"></i>
+                                <span>父母</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 个人空间 -->
+                    <div class="flex justify-between items-center p-3 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-folder-fill text-purple-500 mr-2"></i>
+                            <span>个人</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                </div>
+                
+                <!-- 添加新空间按钮 -->
+                <div class="flex justify-center mb-6">
+                    <button class="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-lg">
+                        <i class="ri-add-line mr-1"></i>
+                        <span>添加新空间</span>
+                    </button>
+                </div>
+                
+                <!-- 底部按钮 -->
+                <div class="flex space-x-4">
+                    <button class="flex-1 py-3 bg-gray-200 rounded-xl">取消</button>
+                    <button class="flex-1 py-3 bg-blue-500 text-white rounded-xl">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我的页面 -->
+        <div id="profilePage" class="page min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <h1 class="text-xl font-medium">我的</h1>
+            </div>
+
+            <div class="p-4">
+                <!-- 用户信息 -->
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full overflow-hidden mr-4">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-medium">李小明</h2>
+                        <p class="text-gray-500">已记录42天</p>
+                    </div>
+                </div>
+                
+                <!-- 设置列表 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+                    <div class="flex justify-between items-center p-4 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-notification-4-line text-blue-500 mr-3"></i>
+                            <span>通知设置</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-cloud-line text-blue-500 mr-3"></i>
+                            <span>数据同步</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-shield-keyhole-line text-blue-500 mr-3"></i>
+                            <span>隐私设置</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4">
+                        <div class="flex items-center">
+                            <i class="ri-brush-line text-blue-500 mr-3"></i>
+                            <span>主题与外观</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+                    <div class="flex justify-between items-center p-4 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-question-line text-blue-500 mr-3"></i>
+                            <span>帮助中心</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4">
+                        <div class="flex items-center">
+                            <i class="ri-information-line text-blue-500 mr-3"></i>
+                            <span>关于我们</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <button class="w-full py-3 text-red-500 bg-white rounded-xl shadow-sm">
+                    退出登录
+                </button>
+            </div>
+        </div>
+
+        <!-- 添加未来页面 -->
+        <div id="futurePage" class="page min-h-screen pb-20">
+            <!-- 顶部导航 -->
+            <div class="sticky top-0 bg-white p-4 flex justify-between items-center shadow-sm z-10">
+                <h1 class="text-xl font-medium">写给未来的自己</h1>
+            </div>
+
+            <div class="p-4">
+                <!-- 未来选择器 -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-4">
+                    <h3 class="font-medium mb-3">选择接收时间</h3>
+                    
+                    <!-- 日期选择 -->
+                    <div class="flex items-center justify-between mb-3 p-2 border-b">
+                        <div class="flex items-center">
+                            <i class="ri-calendar-line text-blue-500 mr-2"></i>
+                            <span>未来日期</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-blue-500">2024年4月20日</span>
+                            <i class="ri-arrow-right-s-line ml-1 text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 事件触发 -->
+                    <div class="flex items-center justify-between p-2">
+                        <div class="flex items-center">
+                            <i class="ri-alarm-line text-purple-500 mr-2"></i>
+                            <span>事件触发</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-purple-500">生日当天</span>
+                            <i class="ri-arrow-right-s-line ml-1 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 添加按钮 -->
+                <button class="w-full flex items-center justify-center bg-blue-500 text-white py-3 rounded-xl font-medium mb-6" onclick="goToAddPageWithFuture()">
+                    <i class="ri-add-line mr-2"></i>
+                    <span>添加未来信息</span>
+                </button>
+                
+                <!-- 未来信息列表 -->
+                <h3 class="font-medium mb-3">将在未来收到的信息</h3>
+                
+                <!-- 列表项1 -->
+                <div class="bg-white rounded-xl shadow-sm mb-4">
+                    <div class="p-3">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">2024年4月20日</span>
+                            <span class="text-xs text-gray-500">3天前创建</span>
+                        </div>
+                        <p class="text-gray-800 mb-2 line-clamp-2">写给未来的自己：希望工作顺利，家庭和睦，未来一切安好...</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <i class="ri-image-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">2张图片</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="ri-folder-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">个人</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 列表项2 -->
+                <div class="bg-white rounded-xl shadow-sm mb-4">
+                    <div class="p-3">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded-full">生日当天</span>
+                            <span class="text-xs text-gray-500">1周前创建</span>
+                        </div>
+                        <p class="text-gray-800 mb-2 line-clamp-2">祝自己生日快乐！希望这一年有所成长，能够更加坚强和独立...</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <i class="ri-image-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">1张图片</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="ri-mic-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">30秒语音</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 列表项3 -->
+                <div class="bg-white rounded-xl shadow-sm mb-4">
+                    <div class="p-3">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">孩子生日</span>
+                            <span class="text-xs text-gray-500">1个月前创建</span>
+                        </div>
+                        <p class="text-gray-800 mb-2 line-clamp-2">记录下孩子的成长，希望在未来的日子里，我们能一起回顾这美好的时光...</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <i class="ri-video-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">1个视频</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="ri-folder-line text-gray-400 mr-1"></i>
+                                <span class="text-xs text-gray-500">家庭/孩子</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t flex justify-around items-center pt-2 pb-6">
+            <button class="flex flex-col items-center" onclick="showPage('homePage')">
+                <i class="ri-home-5-fill text-blue-500 text-xl"></i>
+                <span class="text-xs mt-1 text-blue-500">首页</span>
+            </button>
+            
+            <button class="flex flex-col items-center" onclick="showPage('reviewPage')">
+                <i class="ri-calendar-line text-gray-400 text-xl"></i>
+                <span class="text-xs mt-1 text-gray-400">回首</span>
+            </button>
+            
+            <button class="flex flex-col items-center" onclick="showPage('addPage')">
+                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                    <i class="ri-add-line text-white text-xl"></i>
+                </div>
+            </button>
+            
+            <button class="flex flex-col items-center" onclick="showPage('futurePage')">
+                <i class="ri-rocket-line text-gray-400 text-xl"></i>
+                <span class="text-xs mt-1 text-gray-400">未来</span>
+            </button>
+            
+            <button class="flex flex-col items-center" onclick="showPage('profilePage')">
+                <i class="ri-user-line text-gray-400 text-xl"></i>
+                <span class="text-xs mt-1 text-gray-400">我的</span>
+            </button>
+        </div>
+        
+        <!-- 底部Home指示器 -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto flex justify-center pb-1">
+            <div class="ios-home-indicator"></div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示选中的页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 更新底部导航栏状态
+            document.querySelectorAll('.fixed button').forEach(button => {
+                const icon = button.querySelector('i');
+                const text = button.querySelector('span');
+                if (icon && text) {
+                    icon.className = icon.className.replace('fill', 'line').replace('blue-500', 'gray-400');
+                    text.className = text.className.replace('text-blue-500', 'text-gray-400');
+                }
+            });
+            
+            // 高亮当前选中的图标
+            const navMapping = {
+                'homePage': 0,
+                'reviewPage': 1,
+                'addPage': 2,
+                'futurePage': 3,
+                'profilePage': 4
+            };
+            
+            const index = navMapping[pageId];
+            if (index !== undefined && index !== 2) { // 跳过中间的添加按钮
+                const button = document.querySelectorAll('.fixed button')[index];
+                const icon = button.querySelector('i');
+                const text = button.querySelector('span');
+                if (icon && text) {
+                    icon.className = icon.className.replace('line', 'fill').replace('gray-400', 'blue-500');
+                    text.className = text.className.replace('text-gray-400', 'text-blue-500');
+                }
+            }
+        }
+        
+        // 点击空间选择器弹出空间页面
+        document.querySelector('.border.rounded-full').addEventListener('click', function() {
+            showPage('spacePage');
+        });
+        
+        // 从未来页面跳转到添加页面，并传递选择的日期/事件
+        function goToAddPageWithFuture() {
+            // 显示未来时间提示
+            document.getElementById('futureTimeIndicator').classList.remove('hidden');
+            
+            // 跳转到添加页面
+            showPage('addPage');
+        }
+        
+        // 点击返回按钮隐藏未来时间提示
+        document.querySelector('#addPage .ri-arrow-left-line').addEventListener('click', function() {
+            document.getElementById('futureTimeIndicator').classList.add('hidden');
+            showPage('homePage');
+        });
+        
+        // 回首页视图切换
+        function switchReviewView(viewType) {
+            // 隐藏所有视图
+            document.querySelectorAll('.review-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            
+            // 显示选中的视图
+            document.getElementById(viewType + 'View').classList.remove('hidden');
+            
+            // 更新视图切换按钮样式
+            const viewButtons = document.querySelectorAll('#reviewPage .bg-gray-100 button');
+            viewButtons.forEach(button => {
+                button.classList.remove('bg-blue-500', 'text-white');
+            });
+            
+            // 根据视图类型设置标题
+            if (viewType === 'week') {
+                document.getElementById('reviewDateTitle').textContent = '2023年11月';
+                viewButtons[0].classList.add('bg-blue-500', 'text-white');
+            } else if (viewType === 'month') {
+                document.getElementById('reviewDateTitle').textContent = '2023年11月';
+                viewButtons[1].classList.add('bg-blue-500', 'text-white');
+            }
+        }
+        
+        // 语音输入交互
+        document.getElementById('voiceInputBtn').addEventListener('click', function() {
+            // 显示录音状态，隐藏语音输入按钮
+            document.getElementById('recordingStatus').classList.remove('hidden');
+            this.classList.add('hidden');
+            
+            // 模拟：5秒后结束录音
+            setTimeout(function() {
+                document.getElementById('recordingStatus').classList.add('hidden');
+                document.getElementById('voiceInputBtn').classList.remove('hidden');
+            }, 5000);
+        });
+        
+        // 结束录音按钮
+        document.querySelector('#recordingStatus button').addEventListener('click', function() {
+            document.getElementById('recordingStatus').classList.add('hidden');
+            document.getElementById('voiceInputBtn').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html> 

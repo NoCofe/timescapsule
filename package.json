@@ -1,0 +1,7 @@
+{
+  "name": "timescapsule",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "nodemon --watch timescapsule --watch project.yml -e swift,yml --exec 'xcodegen generate'"
+  }
+}

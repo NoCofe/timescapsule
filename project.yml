@@ -1,0 +1,24 @@
+name: timescapsule
+options:
+  bundleIdPrefix: jzx
+targets:
+  timescapsule:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.5"
+    sources:
+      - path: timescapsule
+    settings:
+      base:
+        DEVELOPMENT_TEAM: M7KAKW6TU2
+        PRODUCT_BUNDLE_IDENTIFIER: jzx.timescapsule
+    info:
+      path: timescapsule/Info.plist
+      properties:
+        UILaunchStoryboardName: ""
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
