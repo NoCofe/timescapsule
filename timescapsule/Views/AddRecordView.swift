@@ -115,11 +115,20 @@ struct AddRecordView: View {
             }
             .background(Color.white)
         }
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(selectedImages: $selectedImages)
-        }
-        .sheet(isPresented: $showCamera) {
-            CameraView(image: $selectedImages)
+        .sheet(isPresented: Binding<Bool>(
+            get: { showImagePicker || showCamera },
+            set: { 
+                if !$0 {
+                    showImagePicker = false
+                    showCamera = false
+                }
+            }
+        )) {
+            if showImagePicker {
+                ImagePicker(selectedImages: $selectedImages)
+            } else if showCamera {
+                CameraView(image: $selectedImages)
+            }
         }
     }
     

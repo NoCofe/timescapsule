@@ -1,23 +1,34 @@
 import SwiftUI
 
+// Sheet类型枚举
+enum FutureSheetType {
+    case datePicker
+    case eventPicker
+    case addRecord
+    case none
+}
+
 struct FutureView: View {
     @State private var futureMessages: [FutureMessage] = []
-    @State private var showAddView = false
     @State private var selectedDate: Date?
     @State private var selectedTrigger: EventTrigger?
+    @State private var showSheetType: FutureSheetType = .none
     
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // 顶部标题
-                Text("写给未来的自己")
-                    .font(.system(size: 20, weight: .semibold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.top, 16)
-                    .padding(.bottom, 16)
-                    .background(Color.white)
-                    .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                // 顶部导航栏
+                HStack {
+                    Spacer()
+                    
+                    Text("写给未来的自己")
+                        .font(.headline)
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(Color.white)
+                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                 
                 ScrollView {
                     VStack(spacing: 16) {
@@ -29,7 +40,7 @@ struct FutureView: View {
                                 
                                 // 日期选择
                                 Button {
-                                    // 打开日期选择器
+                                    showSheetType = .datePicker
                                 } label: {
                                     HStack {
                                         Image(systemName: "calendar")
@@ -50,15 +61,12 @@ struct FutureView: View {
                                     .padding(.vertical, 12)
                                     .padding(.horizontal, 2)
                                 }
-                                .sheet(isPresented: $showAddView) {
-                                    // 日期选择器视图
-                                }
                                 
                                 Divider()
                                 
                                 // 事件触发
                                 Button {
-                                    // 打开事件触发选择
+                                    showSheetType = .eventPicker
                                 } label: {
                                     HStack {
                                         Image(systemName: "alarm")
@@ -90,7 +98,7 @@ struct FutureView: View {
                         
                         // 添加按钮
                         Button {
-                            showAddView = true
+                            showSheetType = .addRecord
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
@@ -152,8 +160,26 @@ struct FutureView: View {
             .onAppear {
                 loadFutureMessages()
             }
-            .sheet(isPresented: $showAddView) {
-                AddRecordView()
+            .sheet(isPresented: Binding<Bool>(
+                get: { showSheetType != .none },
+                set: { if !$0 { showSheetType = .none } }
+            )) {
+                switch showSheetType {
+                case .datePicker:
+                    DatePickerView(selectedDate: $selectedDate, isPresented: Binding<Bool>(
+                        get: { showSheetType == .datePicker },
+                        set: { if !$0 { showSheetType = .none } }
+                    ))
+                case .eventPicker:
+                    EventPickerView(selectedTrigger: $selectedTrigger, isPresented: Binding<Bool>(
+                        get: { showSheetType == .eventPicker },
+                        set: { if !$0 { showSheetType = .none } }
+                    ))
+                case .addRecord:
+                    AddRecordView()
+                case .none:
+                    EmptyView()
+                }
             }
         }
     }
@@ -365,7 +391,7 @@ struct DatePickerView: View {
 }
 
 // 事件触发选择器视图
-struct EventTriggerPickerView: View {
+struct EventPickerView: View {
     @Binding var selectedTrigger: EventTrigger?
     @Binding var isPresented: Bool
     

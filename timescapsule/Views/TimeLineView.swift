@@ -130,8 +130,68 @@ class TimeLineViewModel: ObservableObject {
     func loadRecords() {
         if let data = UserDefaults.standard.data(forKey: recordsKey),
            let decoded = try? JSONDecoder().decode([Record].self, from: data) {
-            updateRecords(decoded)
+            // 确保没有重复的UUID
+            var uniqueRecords: [Record] = []
+            var idSet = Set<UUID>()
+            
+            for record in decoded {
+                if !idSet.contains(record.id) {
+                    idSet.insert(record.id)
+                    uniqueRecords.append(record)
+                } else {
+                    // 创建一个新的Record副本，但使用新的UUID
+                    let newRecord = Record(
+                        id: UUID(), // 生成新的UUID
+                        type: record.type,
+                        content: record.content,
+                        date: record.date,
+                        moodTag: record.moodTag,
+                        location: record.location
+                    )
+                    idSet.insert(newRecord.id)
+                    uniqueRecords.append(newRecord)
+                }
+            }
+            
+            updateRecords(uniqueRecords)
+        } else {
+            // 创建一些示例数据
+            let demoRecords = createDemoRecords()
+            updateRecords(demoRecords)
         }
+    }
+    
+    // 创建示例数据
+    private func createDemoRecords() -> [Record] {
+        let today = Date()
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)!
+        
+        return [
+            Record(
+                id: UUID(),
+                type: .text,
+                content: "今天是个好天气，心情很不错！",
+                date: today,
+                moodTag: .happy,
+                location: "家里"
+            ),
+            Record(
+                id: UUID(),
+                type: .image,
+                content: "出去玩拍的照片",
+                date: today,
+                moodTag: .excited,
+                location: "公园"
+            ),
+            Record(
+                id: UUID(),
+                type: .text,
+                content: "昨天工作很忙，有点累。",
+                date: yesterday,
+                moodTag: .tired,
+                location: "办公室"
+            )
+        ]
     }
     
     private func groupRecordsByTimeRange(records: [Record], component: Calendar.Component) -> [DailySummary] {

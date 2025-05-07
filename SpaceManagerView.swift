@@ -1,11 +1,20 @@
 import SwiftUI
 
+// Sheet类型枚举
+enum SpaceSheetType {
+    case addSpace
+    case parentSelector
+    case none
+}
+
 struct SpaceManagerView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var spaces: [Space] = []
     @State private var selectedSpace: Space?
     @State private var expandedSpaces: Set<UUID> = []
-    @State private var showAddSpaceSheet = false
+    @State private var sheetType: SpaceSheetType = .none
+    @State private var tempSelectedParent: Space? = nil
+    @State private var tempSpaceType: SpaceType = .personal
     
     var body: some View {
         NavigationView {
@@ -42,106 +51,108 @@ struct SpaceManagerView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                 
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: 0) {
                         // 当前选择的空间
-                        if let selected = selectedSpace {
-                            VStack(alignment: .leading, spacing: 8) {
+                        if let selectedSpace = selectedSpace {
+                            VStack(alignment: .leading, spacing: 12) {
                                 Text("当前空间")
                                     .font(.headline)
-                                    .foregroundColor(.blue.opacity(0.8))
+                                    .foregroundColor(.gray)
                                 
                                 HStack {
-                                    Image(systemName: getSpaceIcon(for: selected.type))
-                                        .foregroundColor(getSpaceColor(for: selected.type))
+                                    Image(systemName: getSpaceIcon(for: selectedSpace.type))
+                                        .foregroundColor(getSpaceColor(for: selectedSpace.type))
                                     
-                                    Text(getFullPath(for: selected))
-                                        .fontWeight(.medium)
+                                    Text(getFullPath(for: selectedSpace))
+                                        .font(.system(size: 16, weight: .medium))
                                 }
-                                .padding()
+                                .padding(12)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .background(Color.blue.opacity(0.1))
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.blue.opacity(0.2), lineWidth: 1)
-                                )
+                                .cornerRadius(8)
                             }
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                             .padding(.horizontal)
                             .padding(.top, 16)
                         }
                         
                         // 空间列表
-                        VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text("所有空间")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    sheetType = .addSpace
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "plus")
+                                        Text("添加")
+                                    }
+                                    .font(.subheadline)
+                                    .foregroundColor(.blue)
+                                }
+                            }
+                            .padding(.bottom, 4)
+                            
                             // 全部空间选项
-                            SpaceRowView(
-                                space: Space(id: UUID(), name: "全部", type: .all),
-                                selectedSpace: $selectedSpace,
-                                expandedSpaces: $expandedSpaces,
-                                spaces: spaces,
-                                level: 0
-                            )
-                            .padding(.vertical, 12)
-                            .padding(.horizontal)
-                            .background(selectedSpace?.type == .all ? Color.gray.opacity(0.1) : Color.clear)
+                            Button {
+                                // 选择"全部"空间
+                                selectedSpace = Space(id: UUID(), name: "全部", type: .all)
+                            } label: {
+                                HStack {
+                                    Image(systemName: getSpaceIcon(for: .all))
+                                        .foregroundColor(getSpaceColor(for: .all))
+                                    
+                                    Text("全部")
+                                        .foregroundColor(.primary)
+                                    
+                                    Spacer()
+                                    
+                                    if selectedSpace?.type == .all {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .padding(.vertical, 8)
+                            }
                             
                             Divider()
                             
-                            // 根空间列表
-                            ForEach(spaces.filter { $0.parentId == nil && $0.type != .all }) { space in
-                                SpaceRowView(
-                                    space: space,
-                                    selectedSpace: $selectedSpace,
-                                    expandedSpaces: $expandedSpaces,
-                                    spaces: spaces,
-                                    level: 0
-                                )
-                                
-                                Divider()
+                            // 分层级显示空间
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(spaces.filter { $0.parentId == nil }) { space in
+                                    SpaceRowView(
+                                        space: space,
+                                        selectedSpace: $selectedSpace,
+                                        expandedSpaces: $expandedSpaces,
+                                        spaces: spaces,
+                                        level: 0
+                                    )
+                                    
+                                    if space.id != spaces.filter({ $0.parentId == nil }).last?.id {
+                                        Divider()
+                                    }
+                                }
                             }
                         }
+                        .padding()
                         .background(Color.white)
-                        .cornerRadius(10)
+                        .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
                         .padding(.horizontal)
-                        .padding(.top, 8)
+                        .padding(.top, 16)
                         
-                        // 添加新空间按钮
-                        Button {
-                            showAddSpaceSheet = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("添加新空间")
-                            }
-                            .foregroundColor(.blue)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.blue, lineWidth: 1)
-                            )
-                        }
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                        
-                        Spacer()
-                        
-                        // 底部按钮
-                        HStack(spacing: 16) {
+                        // 保存按钮
+                        VStack {
                             Button {
-                                presentationMode.wrappedValue.dismiss()
-                            } label: {
-                                Text("取消")
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.primary)
-                                    .frame(height: 50)
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(10)
-                            }
-                            
-                            Button {
-                                // 保存选择的空间并返回
+                                // 保存所选空间，并返回
                                 presentationMode.wrappedValue.dismiss()
                             } label: {
                                 Text("保存")
@@ -161,8 +172,25 @@ struct SpaceManagerView: View {
                 }
                 .background(Color(UIColor.systemGray6))
             }
-            .sheet(isPresented: $showAddSpaceSheet) {
-                AddSpaceView(spaces: $spaces)
+            .sheet(isPresented: Binding<Bool>(
+                get: { sheetType != .none },
+                set: { if !$0 { sheetType = .none } }
+            )) {
+                switch sheetType {
+                case .addSpace:
+                    AddSpaceView(spaces: $spaces, sheetType: $sheetType, 
+                                 tempSelectedParent: $tempSelectedParent, 
+                                 tempSpaceType: $tempSpaceType)
+                case .parentSelector:
+                    ParentSelectorView(
+                        spaces: spaces,
+                        selectedParent: $tempSelectedParent,
+                        sheetType: $sheetType,
+                        spaceType: tempSpaceType
+                    )
+                case .none:
+                    EmptyView()
+                }
             }
             .onAppear {
                 loadSpaces()
@@ -394,11 +422,12 @@ struct SpaceRowView: View {
 struct AddSpaceView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var spaces: [Space]
+    @Binding var sheetType: SpaceSheetType
+    @Binding var tempSelectedParent: Space?
+    @Binding var tempSpaceType: SpaceType
     
     @State private var spaceName: String = ""
     @State private var selectedType: SpaceType = .personal
-    @State private var selectedParent: Space? = nil
-    @State private var showParentSelector = false
     
     // 可用的空间类型
     private let spaceTypes: [SpaceType] = [.work, .family, .personal, .child, .partner, .parent]
@@ -420,11 +449,14 @@ struct AddSpaceView: View {
                             .tag(type)
                         }
                     }
+                    .onChange(of: selectedType) { newValue in
+                        tempSpaceType = newValue
+                    }
                     
                     // 父空间选择
                     if selectedType != .work && selectedType != .family && selectedType != .personal {
                         Button {
-                            showParentSelector = true
+                            sheetType = .parentSelector
                         } label: {
                             HStack {
                                 Text("父空间")
@@ -432,20 +464,13 @@ struct AddSpaceView: View {
                                 
                                 Spacer()
                                 
-                                Text(selectedParent?.name ?? "请选择")
-                                    .foregroundColor(selectedParent != nil ? .blue : .gray)
+                                Text(tempSelectedParent?.name ?? "请选择")
+                                    .foregroundColor(tempSelectedParent != nil ? .blue : .gray)
                                 
                                 Image(systemName: "chevron.right")
                                     .font(.system(size: 12))
                                     .foregroundColor(.gray)
                             }
-                        }
-                        .sheet(isPresented: $showParentSelector) {
-                            ParentSelectorView(
-                                spaces: spaces,
-                                selectedParent: $selectedParent,
-                                spaceType: selectedType
-                            )
                         }
                     }
                 }
@@ -469,7 +494,8 @@ struct AddSpaceView: View {
             .navigationBarTitle("添加新空间", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("取消") {
-                    presentationMode.wrappedValue.dismiss()
+                    tempSelectedParent = nil
+                    sheetType = .none
                 }
             )
         }
@@ -478,7 +504,7 @@ struct AddSpaceView: View {
     // 表单验证
     private var isFormValid: Bool {
         !spaceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        (selectedType == .work || selectedType == .family || selectedType == .personal || selectedParent != nil)
+        (selectedType == .work || selectedType == .family || selectedType == .personal || tempSelectedParent != nil)
     }
     
     // 添加空间
@@ -487,11 +513,12 @@ struct AddSpaceView: View {
             id: UUID(),
             name: spaceName,
             type: selectedType,
-            parentId: selectedParent?.id
+            parentId: tempSelectedParent?.id
         )
         
         spaces.append(newSpace)
-        presentationMode.wrappedValue.dismiss()
+        tempSelectedParent = nil
+        sheetType = .none
     }
     
     // 获取空间类型名称
@@ -560,6 +587,7 @@ struct ParentSelectorView: View {
     @Environment(\.presentationMode) var presentationMode
     let spaces: [Space]
     @Binding var selectedParent: Space?
+    @Binding var sheetType: SpaceSheetType
     let spaceType: SpaceType
     
     var body: some View {
@@ -569,7 +597,7 @@ struct ParentSelectorView: View {
                 ForEach(spaces.filter { isValidParent($0) }) { space in
                     Button {
                         selectedParent = space
-                        presentationMode.wrappedValue.dismiss()
+                        sheetType = .addSpace
                     } label: {
                         HStack {
                             Image(systemName: getSpaceIcon(for: space.type))
@@ -588,11 +616,10 @@ struct ParentSelectorView: View {
                     }
                 }
             }
-            .listStyle(InsetGroupedListStyle())
             .navigationBarTitle("选择父空间", displayMode: .inline)
             .navigationBarItems(
-                leading: Button("取消") {
-                    presentationMode.wrappedValue.dismiss()
+                leading: Button("返回") {
+                    sheetType = .addSpace
                 }
             )
         }
