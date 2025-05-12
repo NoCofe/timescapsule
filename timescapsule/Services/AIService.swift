@@ -14,11 +14,21 @@ class AIService {
             "主要处理了项目A的需求",
             "休息时间充足，状态不错"
         ]
+        
+        // 从记录中提取ID
+        let recordIds = records.map { $0.id }
+        
+        // 使用一个默认的用户ID（在实际应用中，这应该由调用者提供）
+        let userId = UUID()
+        
         return DailySummary(
             id: UUID(),
             date: Date(),
             summaryText: summaryTexts.randomElement() ?? "这是今天的总结",
-            moodTag: .happy
+            moodTag: .happy,
+            recordIds: recordIds,
+            userId: userId,
+            generatedAt: Date()
         )
     }
     

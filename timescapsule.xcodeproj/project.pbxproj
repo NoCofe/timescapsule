@@ -9,42 +9,56 @@
 /* Begin PBXBuildFile section */
 		004C93F49A319513A0369FE4 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359826D084754EDC1F40A3FC /* Record.swift */; };
 		07EAB561959951ED9295E688 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53207511C2E651ECA88F9749 /* ColorExtension.swift */; };
+		10942170020FCA24206BC5EB /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A11FE75AF8848FB45319CA /* MediaItem.swift */; };
 		1E38323F05C8884212B5E57B /* timescapsuleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4C2C4354BE557189E23290 /* timescapsuleApp.swift */; };
+		251BFCEF22CE709625FF1922 /* DataStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE875F93F27E5AFBFBB95B /* DataStoreService.swift */; };
 		322E619AB84B7FBC24327771 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326F0AF72F36022F87813579 /* MainTabView.swift */; };
 		34871A4BBEBCA8FBFCE254D2 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A35B4C431462118184C3AB /* AIService.swift */; };
 		457BAF2394BBBB97FAF1F7CC /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82250637468FAF6724529FF4 /* DailySummary.swift */; };
 		463C85998C825E7B439CC1C1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31392B8283472EA69EB1CA5D /* ProfileView.swift */; };
 		4ABFCCD7317FEDFF961C6798 /* Records.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B890B063DCFCDAE37AED1 /* Records.swift */; };
+		546E304D5A229E71F3BFFE7A /* Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F04BC96FB99D843C78E4A /* Space.swift */; };
 		6B24ECACE423905CBFF110B5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CE844C262ECD501D2171AB /* HomeView.swift */; };
+		721E754E7E383E4CA46F2C69 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF778DCA765E42009D27ED2 /* User.swift */; };
 		743DE75380A40AB34595BE6B /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFDC2A4F73EF2D813F138DB /* ReviewView.swift */; };
+		7A405857463BC3A6C9BF8A9C /* ModelAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EED78A7FAAC9791A3C4A1B6 /* ModelAdapters.swift */; };
 		7BEE1501C80B28D7C92A6686 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF420C6F235DFF312C89362 /* RecordRow.swift */; };
 		7ECD324D812778ABC9C56715 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F6BD39FB60EF353740A2 /* RecordViewModel.swift */; };
+		808C511DA380B1E1FF217628 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA9C1B51DD0B0A40CDA2898 /* CoreDataManager.swift */; };
 		84589C6F537F567A5A9D116E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1E4B460B51BC69E1085FE42 /* Preview Assets.xcassets */; };
 		8E2F7C494DE509811437ED34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC0FDA58F4AE297917257C0 /* ContentView.swift */; };
 		99EA4B7A25A46FBE5575B7F6 /* TimeLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9996AEF67386E1A0E5C5A6 /* TimeLineView.swift */; };
 		9B93796ED1A62B011ADC403B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4B63B36F7BCA246AE01FF40 /* Assets.xcassets */; };
 		B856FDFE0C5993F5AA93AA76 /* BaseRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADFC835CEE39D1968F8167E /* BaseRecord.swift */; };
+		BE78530DAED06BC52D45FB8E /* TimescapsuleModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFD71D89C4571604999D8325 /* TimescapsuleModel.xcdatamodeld */; };
 		C49CB536C1F56013C41C4AD7 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10691D7B09C1CB4FDEC3C846 /* CalendarView.swift */; };
 		D682E5FD6D797E1B33ECCE04 /* FutureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F1585E14041ADB94836A80 /* FutureView.swift */; };
 		F3B831677641C13F0C6E5291 /* AddRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28122E5165EF77DA575F7E5C /* AddRecordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FF778DCA765E42009D27ED2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		10691D7B09C1CB4FDEC3C846 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		1DA9C1B51DD0B0A40CDA2898 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		28122E5165EF77DA575F7E5C /* AddRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecordView.swift; sourceTree = "<group>"; };
 		2EEE5D742FA1E9006034ABD1 /* timescapsule.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = timescapsule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31392B8283472EA69EB1CA5D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		31A35B4C431462118184C3AB /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		326F0AF72F36022F87813579 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		33FE875F93F27E5AFBFBB95B /* DataStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreService.swift; sourceTree = "<group>"; };
 		359826D084754EDC1F40A3FC /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		37A11FE75AF8848FB45319CA /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 		43F2F6BD39FB60EF353740A2 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		47F1585E14041ADB94836A80 /* FutureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureView.swift; sourceTree = "<group>"; };
 		53207511C2E651ECA88F9749 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		561F04BC96FB99D843C78E4A /* Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space.swift; sourceTree = "<group>"; };
 		5F754FC4C344BBF915422DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6EED78A7FAAC9791A3C4A1B6 /* ModelAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAdapters.swift; sourceTree = "<group>"; };
 		7B9996AEF67386E1A0E5C5A6 /* TimeLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineView.swift; sourceTree = "<group>"; };
 		82250637468FAF6724529FF4 /* DailySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		8DF420C6F235DFF312C89362 /* RecordRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 		8DFDC2A4F73EF2D813F138DB /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		97D7AA6852603991AB341086 /* TimescapsuleModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimescapsuleModel.xcdatamodel; sourceTree = "<group>"; };
 		B9CE844C262ECD501D2171AB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C1E4B460B51BC69E1085FE42 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CADFC835CEE39D1968F8167E /* BaseRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRecord.swift; sourceTree = "<group>"; };
@@ -108,9 +122,15 @@
 			isa = PBXGroup;
 			children = (
 				CADFC835CEE39D1968F8167E /* BaseRecord.swift */,
+				1DA9C1B51DD0B0A40CDA2898 /* CoreDataManager.swift */,
 				82250637468FAF6724529FF4 /* DailySummary.swift */,
+				37A11FE75AF8848FB45319CA /* MediaItem.swift */,
+				6EED78A7FAAC9791A3C4A1B6 /* ModelAdapters.swift */,
 				359826D084754EDC1F40A3FC /* Record.swift */,
 				E54B890B063DCFCDAE37AED1 /* Records.swift */,
+				561F04BC96FB99D843C78E4A /* Space.swift */,
+				FFD71D89C4571604999D8325 /* TimescapsuleModel.xcdatamodeld */,
+				0FF778DCA765E42009D27ED2 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -119,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				31A35B4C431462118184C3AB /* AIService.swift */,
+				33FE875F93F27E5AFBFBB95B /* DataStoreService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -224,17 +245,24 @@
 				C49CB536C1F56013C41C4AD7 /* CalendarView.swift in Sources */,
 				07EAB561959951ED9295E688 /* ColorExtension.swift in Sources */,
 				8E2F7C494DE509811437ED34 /* ContentView.swift in Sources */,
+				808C511DA380B1E1FF217628 /* CoreDataManager.swift in Sources */,
 				457BAF2394BBBB97FAF1F7CC /* DailySummary.swift in Sources */,
+				251BFCEF22CE709625FF1922 /* DataStoreService.swift in Sources */,
 				D682E5FD6D797E1B33ECCE04 /* FutureView.swift in Sources */,
 				6B24ECACE423905CBFF110B5 /* HomeView.swift in Sources */,
 				322E619AB84B7FBC24327771 /* MainTabView.swift in Sources */,
+				10942170020FCA24206BC5EB /* MediaItem.swift in Sources */,
+				7A405857463BC3A6C9BF8A9C /* ModelAdapters.swift in Sources */,
 				463C85998C825E7B439CC1C1 /* ProfileView.swift in Sources */,
 				004C93F49A319513A0369FE4 /* Record.swift in Sources */,
 				7BEE1501C80B28D7C92A6686 /* RecordRow.swift in Sources */,
 				7ECD324D812778ABC9C56715 /* RecordViewModel.swift in Sources */,
 				4ABFCCD7317FEDFF961C6798 /* Records.swift in Sources */,
 				743DE75380A40AB34595BE6B /* ReviewView.swift in Sources */,
+				546E304D5A229E71F3BFFE7A /* Space.swift in Sources */,
 				99EA4B7A25A46FBE5575B7F6 /* TimeLineView.swift in Sources */,
+				BE78530DAED06BC52D45FB8E /* TimescapsuleModel.xcdatamodeld in Sources */,
+				721E754E7E383E4CA46F2C69 /* User.swift in Sources */,
 				1E38323F05C8884212B5E57B /* timescapsuleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +445,19 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FFD71D89C4571604999D8325 /* TimescapsuleModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				97D7AA6852603991AB341086 /* TimescapsuleModel.xcdatamodel */,
+			);
+			currentVersion = 97D7AA6852603991AB341086 /* TimescapsuleModel.xcdatamodel */;
+			path = TimescapsuleModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A1D2B4A8CEBA8FBC74573A3A /* Project object */;
 }

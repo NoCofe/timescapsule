@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="UserEntity" representedClassName="UserEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="recordDays" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="username" attributeType="String"/>
+        <relationship name="dailySummaries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DailySummaryEntity" inverseName="user" inverseEntity="DailySummaryEntity"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecordEntity" inverseName="creator" inverseEntity="RecordEntity"/>
+        <relationship name="spaces" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpaceEntity" inverseName="owner" inverseEntity="SpaceEntity"/>
+        <relationship name="userSettings" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserSettingsEntity" inverseName="user" inverseEntity="UserSettingsEntity"/>
+    </entity>
+    <entity name="UserSettingsEntity" representedClassName="UserSettingsEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notificationEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="privacyMode" attributeType="String" defaultValueString="private"/>
+        <attribute name="syncEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="themeMode" attributeType="String" defaultValueString="system"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="userSettings" inverseEntity="UserEntity"/>
+    </entity>
+    <entity name="SpaceEntity" representedClassName="SpaceEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="color" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="icon" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="childSpaces" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpaceEntity" inverseName="parentSpace" inverseEntity="SpaceEntity"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="spaces" inverseEntity="UserEntity"/>
+        <relationship name="parentSpace" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceEntity" inverseName="childSpaces" inverseEntity="SpaceEntity"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecordEntity" inverseName="space" inverseEntity="RecordEntity"/>
+    </entity>
+    <entity name="RecordEntity" representedClassName="RecordEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="futureDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFutureRecord" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isUnlocked" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="moodTag" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="creator" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="records" inverseEntity="UserEntity"/>
+        <relationship name="dailySummaries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DailySummaryEntity" inverseName="records" inverseEntity="DailySummaryEntity"/>
+        <relationship name="mediaItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MediaItemEntity" inverseName="record" inverseEntity="MediaItemEntity"/>
+        <relationship name="space" maxCount="1" deletionRule="Nullify" destinationEntity="SpaceEntity" inverseName="records" inverseEntity="SpaceEntity"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="records" inverseEntity="TagEntity"/>
+    </entity>
+    <entity name="MediaItemEntity" representedClassName="MediaItemEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="thumbnailUrl" optional="YES" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="url" attributeType="String"/>
+        <relationship name="record" maxCount="1" deletionRule="Nullify" destinationEntity="RecordEntity" inverseName="mediaItems" inverseEntity="RecordEntity"/>
+    </entity>
+    <entity name="DailySummaryEntity" representedClassName="DailySummaryEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="generatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="moodTag" attributeType="String"/>
+        <attribute name="summaryText" attributeType="String"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecordEntity" inverseName="dailySummaries" inverseEntity="RecordEntity"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="dailySummaries" inverseEntity="UserEntity"/>
+    </entity>
+    <entity name="TagEntity" representedClassName="TagEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecordEntity" inverseName="tags" inverseEntity="RecordEntity"/>
+    </entity>
+</model> 

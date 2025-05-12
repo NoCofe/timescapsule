@@ -203,11 +203,20 @@ class TimeLineViewModel: ObservableObject {
             let moodCounts = Dictionary(grouping: records, by: { $0.moodTag })
             let dominantMood = moodCounts.max(by: { $0.value.count < $1.value.count })?.key ?? .neutral
             
+            // 提取记录ID
+            let recordIds = records.map { $0.id }
+            
+            // 使用一个统一的模拟用户ID
+            let mockUserId = UUID()
+            
             return DailySummary(
                 id: UUID(),
                 date: Calendar.current.date(from: key) ?? Date(),
                 summaryText: "\(records.count)条记录",
-                moodTag: dominantMood
+                moodTag: dominantMood,
+                recordIds: recordIds,
+                userId: mockUserId,
+                generatedAt: Date()
             )
         }
     }
